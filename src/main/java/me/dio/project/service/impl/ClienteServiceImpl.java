@@ -2,6 +2,8 @@ package me.dio.project.service.impl;
 
 import java.util.Optional;
 
+import me.dio.project.handler.CampoObrigatorioException;
+import me.dio.project.handler.ObjetoException;
 import me.dio.project.model.Cliente;
 import me.dio.project.model.Endereco;
 import me.dio.project.repository.ClienteRepository;
@@ -15,7 +17,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
-    // Singleton: Injetar os componentes do Spring com @Autowired.
     @Autowired
     private ClienteRepository clienteRepository;
     @Autowired
@@ -23,53 +24,53 @@ public class ClienteServiceImpl implements ClienteService {
     @Autowired
     private ViaCepService viaCepService;
 
-    // Strategy: Implementar os métodos definidos na interface.
-    // Facade: Abstrair integrações com subsistemas, provendo uma interface simples.
 
     @Override
     public Iterable<Cliente> buscarTodos() {
-        // Buscar todos os Clientes.
         return clienteRepository.findAll();
     }
 
     @Override
-    public Cliente buscarPorId(Long id) {
-        // Buscar Cliente por ID.
-        Optional<Cliente> cliente = clienteRepository.findById(id);
+    public Cliente buscarPorCpf(String cpf) {
+        Optional<Cliente> cliente = clienteRepository.findById(cpf);
         return cliente.get();
     }
 
     @Override
     public void inserir(Cliente cliente) {
+        if(cliente.getCpf() == null){
+            throw new CampoObrigatorioException("cpf");
+        }
+        if(cliente.getNome() == null){
+            throw new CampoObrigatorioException("nome");
+        }
+        if(cliente.getEndereco().getCep() == null){
+            throw new CampoObrigatorioException("cep");
+        }
         salvarClienteComCep(cliente);
     }
 
     @Override
-    public void atualizar(Long id, Cliente cliente) {
-        // Buscar Cliente por ID, caso exista:
-        Optional<Cliente> clienteBd = clienteRepository.findById(id);
+    public void atualizar(String cpf, Cliente cliente) {
+        Optional<Cliente> clienteBd = clienteRepository.findById(cpf);
         if (clienteBd.isPresent()) {
             salvarClienteComCep(cliente);
-        }
+        } else throw new ObjetoException("cliente");
     }
 
     @Override
-    public void deletar(Long id) {
-        // Deletar Cliente por ID.
-        clienteRepository.deleteById(id);
+    public void deletar(String cpf) {
+        clienteRepository.deleteById(cpf);
     }
 
     private void salvarClienteComCep(Cliente cliente) {
-        // Verificar se o Endereco do Cliente já existe (pelo CEP).
         String cep = cliente.getEndereco().getCep();
         Endereco endereco = enderecoRepository.findById(cep).orElseGet(() -> {
-            // Caso não exista, integrar com o ViaCEP e persistir o retorno.
             Endereco novoEndereco = viaCepService.consultarCep(cep);
             enderecoRepository.save(novoEndereco);
             return novoEndereco;
         });
         cliente.setEndereco(endereco);
-        // Inserir Cliente, vinculando o Endereco (novo ou existente).
         clienteRepository.save(cliente);
     }
 

@@ -17,23 +17,23 @@ public class ClienteRestController {
         return ResponseEntity.ok(clienteService.buscarTodos());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Cliente> buscarPorId(@PathVariable Long id) {
-        return ResponseEntity.ok(clienteService.buscarPorId(id));
+    @GetMapping("/{cpf}")
+    public ResponseEntity<Cliente> buscarPorCpf(@PathVariable String cpf) {
+        return ResponseEntity.ok(clienteService.buscarPorCpf(cpf));
     }
     @PostMapping
     public ResponseEntity<Cliente> inserir(@RequestBody Cliente cliente) {
         clienteService.inserir(cliente);
         return ResponseEntity.ok(cliente);
     }
-    @PutMapping("/{id}")
-    public ResponseEntity<Cliente> atualizar(@PathVariable Long id, @RequestBody Cliente cliente){
-        clienteService.atualizar(id, cliente);
+    @PutMapping("/{cpf}")
+    public ResponseEntity<Cliente> atualizar(@PathVariable String cpf, @RequestBody Cliente cliente){
+        clienteService.atualizar(cpf, cliente);
         return ResponseEntity.ok(cliente);
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Cliente> deletar(@PathVariable Long id){
-        clienteService.deletar(id);
+    @DeleteMapping("/{cpf}")
+    public ResponseEntity<Cliente> deletar(@PathVariable String cpf){
+        clienteService.deletar(cpf);
         return ResponseEntity.ok().build();
     }
 }

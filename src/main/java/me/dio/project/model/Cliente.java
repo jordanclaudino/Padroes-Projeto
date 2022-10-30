@@ -5,14 +5,16 @@ import javax.persistence.*;
 @Entity
 public class Cliente {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private String cpf;
     private String nome;
     @ManyToOne
     private Endereco endereco;
 
-    public Long getId() {
-        return id;
+    public String getCpf(){
+        return cpf;
+    }
+    public void setCpf(String cpf){
+        this.cpf = cpf;
     }
 
     public String getNome() {

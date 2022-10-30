@@ -6,10 +6,10 @@ public interface ClienteService {
 
     Iterable<Cliente> buscarTodos();
 
-    Cliente buscarPorId(Long id);
+    Cliente buscarPorCpf(String cpf);
     void inserir(Cliente cliente);
 
-    void atualizar(Long id, Cliente cliente);
+    void atualizar(String cpf, Cliente cliente);
 
-    void deletar(Long id);
+    void deletar(String cpf);
 }
