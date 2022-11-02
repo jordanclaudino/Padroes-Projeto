@@ -1,6 +1,7 @@
 package me.dio.project.service;
 
 
+import me.dio.project.model.Cliente;
 import me.dio.project.model.Livro;
 
 public interface LivroService {

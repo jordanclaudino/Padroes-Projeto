@@ -1,10 +1,9 @@
 package me.dio.project.model;
 
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlElement;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 public class Livro {
@@ -13,16 +12,22 @@ public class Livro {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String isbn;
-    //private List<String> publishers = null;
+    @ElementCollection
+    private List<String> publishers = null;
+    @JsonProperty("number_of_pages")
     private Integer numberOfPages;
-
-    //private List<String> isbn10 = null;
-    //private List<Autor> authors = null;
-    //private List<Linguagem> languages = null;
+    @ElementCollection
+    @JsonProperty("isbn_10")
+    private List<String> isbn10 = null;
+    @ManyToOne(targetEntity = Autor.class, fetch = FetchType.EAGER)
+    private List<Autor> authors = null;
     private String title;
-    //private List<String> isbn13 = null;
+    @ElementCollection
+    @JsonProperty("isbn_13")
+    private List<String> isbn13 = null;
+    @JsonProperty("publish_date")
     private String publishDate;
-
+    @JsonProperty("latest_revision")
     private Integer latestRevision;
     private Integer revision;
 
@@ -30,13 +35,13 @@ public class Livro {
         return id;
     }
 
-    /*public List<String> getPublishers() {
+    public List<String> getPublishers() {
         return publishers;
     }
 
     public void setPublishers(List<String> publishers) {
         this.publishers = publishers;
-    }*/
+    }
 
     public Integer getNumberOfPages() {
         return numberOfPages;
@@ -45,7 +50,7 @@ public class Livro {
     public void setNumberOfPages(Integer numberOfPages) {
         this.numberOfPages = numberOfPages;
     }
-    /*
+
     public List<String> getIsbn10() {
         return isbn10;
     }
@@ -62,14 +67,6 @@ public class Livro {
         this.authors = authors;
     }
 
-    public List<Linguagem> getLanguages() {
-        return languages;
-    }
-
-    public void setLanguages(List<Linguagem> languages) {
-        this.languages = languages;
-    }*/
-
     public String getTitle() {
         return title;
     }
@@ -77,7 +74,7 @@ public class Livro {
     public void setTitle(String title) {
         this.title = title;
     }
-    /*
+
     public List<String> getIsbn13() {
         return isbn13;
     }
@@ -85,7 +82,7 @@ public class Livro {
     public void setIsbn13(List<String> isbn13) {
         this.isbn13 = isbn13;
     }
-    */
+
     public String getPublishDate() {
         return publishDate;
     }
@@ -116,5 +113,9 @@ public class Livro {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

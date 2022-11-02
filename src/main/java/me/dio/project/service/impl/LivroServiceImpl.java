@@ -3,6 +3,7 @@ package me.dio.project.service.impl;
 
 import me.dio.project.handler.ObjetoException;
 import me.dio.project.model.Livro;
+import me.dio.project.repository.AutorRepository;
 import me.dio.project.repository.LivroRepository;
 import me.dio.project.service.LivroService;
 import me.dio.project.service.OpenLibraryService;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class LivroServiceImpl implements LivroService {
     @Autowired
     private LivroRepository livroRepository;
+    @Autowired
+    private AutorRepository autorRepository;
     @Autowired
     private OpenLibraryService openLibraryService;
 
@@ -47,10 +50,10 @@ public class LivroServiceImpl implements LivroService {
     @Override
     public void deletar(Long id) {
         Optional<Livro> livro = livroRepository.findById(id);
-        if (livro.isPresent()) {
-            livroRepository.delete(livro.get());
-        }
+        livro.ifPresent(value -> livroRepository.delete(value));
     }
+
+
     private void salvarLivroComIsbn(Livro livro) {
         String isbn = livro.getIsbn();
         Livro novoLivro = openLibraryService.consultarIsbn(isbn);
