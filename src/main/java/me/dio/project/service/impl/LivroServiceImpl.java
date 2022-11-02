@@ -57,6 +57,7 @@ public class LivroServiceImpl implements LivroService {
     private void salvarLivroComIsbn(Livro livro) {
         String isbn = livro.getIsbn();
         Livro novoLivro = openLibraryService.consultarIsbn(isbn);
+        novoLivro.setIsbn(isbn);
         livroRepository.save(novoLivro);
     }
 }

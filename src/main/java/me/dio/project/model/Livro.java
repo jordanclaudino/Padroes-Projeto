@@ -18,12 +18,14 @@ public class Livro {
     private Integer numberOfPages;
     @ElementCollection
     @JsonProperty("isbn_10")
+    @JoinColumn(name = "livro_id")
     private List<String> isbn10 = null;
-    @ManyToOne(targetEntity = Autor.class, fetch = FetchType.EAGER)
-    private List<Autor> authors = null;
+    /*@ManyToOne(targetEntity = Autor.class, fetch = FetchType.EAGER)
+    private List<Autor> authors = null;*/
     private String title;
     @ElementCollection
     @JsonProperty("isbn_13")
+    @JoinColumn(name = "livro_id")
     private List<String> isbn13 = null;
     @JsonProperty("publish_date")
     private String publishDate;
@@ -59,13 +61,13 @@ public class Livro {
         this.isbn10 = isbn10;
     }
 
-    public List<Autor> getAuthors() {
+    /*public List<Autor> getAuthors() {
         return authors;
     }
 
     public void setAuthors(List<Autor> authors) {
         this.authors = authors;
-    }
+    }*/
 
     public String getTitle() {
         return title;
