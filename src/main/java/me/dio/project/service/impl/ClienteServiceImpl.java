@@ -32,8 +32,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente buscarPorCpf(String cpf) {
-        Optional<Cliente> cliente = clienteRepository.findById(cpf);
-        return cliente.get();
+        return clienteRepository.findById(cpf).orElseThrow( () -> new ObjetoException("Cliente"));
     }
 
     @Override

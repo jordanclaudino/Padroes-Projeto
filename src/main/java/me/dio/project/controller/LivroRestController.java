@@ -1,6 +1,6 @@
 package me.dio.project.controller;
 
-import com.fasterxml.jackson.annotation.JsonFilter;
+
 import me.dio.project.model.Livro;
 import me.dio.project.service.LivroService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("livros")
+@RequestMapping("/livro")
 public class LivroRestController {
     @Autowired
     private LivroService livroService;
@@ -27,12 +27,12 @@ public class LivroRestController {
         livroService.inserir(livro);
         return ResponseEntity.ok(livro);
     }
-    @PutMapping("/{id}")
+    @PutMapping("/alterar/{id}")
     public ResponseEntity<Livro> atualizar(@PathVariable Long id, @RequestBody Livro livro){
         livroService.atualizar(id, livro);
         return ResponseEntity.ok(livro);
     }
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Livro> deletar(@PathVariable Long id){
         livroService.deletar(id);
         return ResponseEntity.ok().build();

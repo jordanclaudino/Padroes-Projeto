@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("endereços")
+@RequestMapping("/endereco")
 public class EnderecoRestController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class EnderecoRestController {
         return ResponseEntity.ok(enderecoService.buscarPorCep(cep));
     }
 
-    @DeleteMapping("/{cep}")
+    @DeleteMapping("/delete/{cep}")
     public ResponseEntity<Endereco> deletar(@PathVariable String cep){
         enderecoService.deletar(cep);
         return ResponseEntity.ok().build();

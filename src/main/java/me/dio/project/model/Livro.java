@@ -2,10 +2,13 @@ package me.dio.project.model;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Builder
 public class Livro {
 
     @Id
@@ -32,6 +35,7 @@ public class Livro {
     @JsonProperty("latest_revision")
     private Integer latestRevision;
     private Integer revision;
+    private boolean emprestado = false;
 
     public Long getId() {
         return id;
@@ -119,5 +123,11 @@ public class Livro {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    public boolean isEmprestado() {
+        return emprestado;
+    }
+    public void setEmprestado(boolean emprestado) {
+        this.emprestado = emprestado;
     }
 }

@@ -1,8 +1,11 @@
 package me.dio.project.model;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 
 @Entity
+@Builder
 public class Cliente {
     @Id
     private String cpf;

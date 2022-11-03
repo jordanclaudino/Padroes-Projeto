@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("clientes")
+@RequestMapping("/cliente")
 public class ClienteRestController {
     @Autowired
     private ClienteService clienteService;
@@ -31,7 +31,7 @@ public class ClienteRestController {
         clienteService.atualizar(cpf, cliente);
         return ResponseEntity.ok(cliente);
     }
-    @DeleteMapping("/{cpf}")
+    @DeleteMapping("/delete/{cpf}")
     public ResponseEntity<Cliente> deletar(@PathVariable String cpf){
         clienteService.deletar(cpf);
         return ResponseEntity.ok().build();
