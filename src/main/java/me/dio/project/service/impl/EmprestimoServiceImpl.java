@@ -24,11 +24,11 @@ public class EmprestimoServiceImpl implements EmprestimoService {
     @Autowired
     private ClienteRepository clienteRepository;
 
+
     @Override
     public Emprestimo emprestarLivro(EmprestimoDto emprestimodto) {
-        Emprestimo emprestimo = new Emprestimo();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
-        Emprestimo.builder()
+        Emprestimo  emprestimo = Emprestimo.builder()
                 .livro(livroRepository.findById(emprestimodto.getIdLivro()).orElseThrow(
                         () -> new ObjetoException("Livro")))
                 .dataEmprestimo(formatter.format(System.currentTimeMillis()))
@@ -37,20 +37,20 @@ public class EmprestimoServiceImpl implements EmprestimoService {
                         ()  -> new ObjetoException("Cliente")
                 ))
                 .build();
-
         emprestimoRepository.save(emprestimo);
+        emprestimo.getLivro().setEmprestado(true);
         return emprestimo;
     }
 
     @Override
     public void devolver(Long id) {
-        Emprestimo emprestimo = buscarPorId(id);
-        if(emprestimo != null) {
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
-            emprestimo.setDataDevolucao(formatter.format(System.currentTimeMillis()));
-            emprestimo.setStatus("FECHADO");
-        }
-
+        Emprestimo emprestimo = emprestimoRepository.findById(id).orElseThrow(
+                () -> new ObjetoException("Emprestimo")
+        );
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd 'at' HH:mm:ss");
+        emprestimo.setDataDevolucao(formatter.format(System.currentTimeMillis()));
+        emprestimo.setStatus("FECHADO");
+        emprestimo.getLivro().setEmprestado(false);
     }
 
     @Override

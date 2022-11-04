@@ -20,6 +20,9 @@ public class Livro {
     @JsonProperty("number_of_pages")
     private Integer numberOfPages;
     @ElementCollection
+    @JoinColumn(name = "livro_id")
+    private List<Long> covers = null;
+    @ElementCollection
     @JsonProperty("isbn_10")
     @JoinColumn(name = "livro_id")
     private List<String> isbn10 = null;
@@ -36,6 +39,24 @@ public class Livro {
     private Integer latestRevision;
     private Integer revision;
     private boolean emprestado = false;
+
+    public Livro() {
+    }
+
+    public Livro(Long id, String isbn, List<String> publishers, Integer numberOfPages, List<Long> covers, List<String> isbn10, String title, List<String> isbn13, String publishDate, Integer latestRevision, Integer revision, boolean emprestado) {
+        this.id = id;
+        this.isbn = isbn;
+        this.publishers = publishers;
+        this.numberOfPages = numberOfPages;
+        this.covers = covers;
+        this.isbn10 = isbn10;
+        this.title = title;
+        this.isbn13 = isbn13;
+        this.publishDate = publishDate;
+        this.latestRevision = latestRevision;
+        this.revision = revision;
+        this.emprestado = emprestado;
+    }
 
     public Long getId() {
         return id;
@@ -129,5 +150,13 @@ public class Livro {
     }
     public void setEmprestado(boolean emprestado) {
         this.emprestado = emprestado;
+    }
+
+    public List<Long> getCovers() {
+        return covers;
+    }
+
+    public void setCovers(List<Long> covers) {
+        this.covers = covers;
     }
 }

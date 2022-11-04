@@ -13,6 +13,15 @@ public class Cliente {
     @ManyToOne
     private Endereco endereco;
 
+    public Cliente() {
+    }
+
+    public Cliente(String cpf, String nome, Endereco endereco) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.endereco = endereco;
+    }
+
     public String getCpf(){
         return cpf;
     }
