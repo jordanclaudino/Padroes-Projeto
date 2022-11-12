@@ -18,7 +18,7 @@ public class Emprestimo {
     private Livro livro;
     private String dataEmprestimo;
     private String dataDevolucao;
-    private String status = "";
+    private String status;
 
     public Emprestimo() {
     }
