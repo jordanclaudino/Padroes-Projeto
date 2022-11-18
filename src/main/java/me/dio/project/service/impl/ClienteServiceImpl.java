@@ -57,11 +57,6 @@ public class ClienteServiceImpl implements ClienteService {
         } else throw new ObjetoException("cliente");
     }
 
-    @Override
-    public void deletar(String cpf) {
-        clienteRepository.deleteById(cpf);
-    }
-
     private void salvarClienteComCep(Cliente cliente) {
         String cep = cliente.getEndereco().getCep();
         Endereco endereco = enderecoRepository.findById(cep).orElseGet(() -> {

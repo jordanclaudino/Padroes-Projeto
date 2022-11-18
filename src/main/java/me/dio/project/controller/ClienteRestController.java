@@ -21,20 +21,15 @@ public class ClienteRestController {
     public ResponseEntity<Cliente> buscarPorCpf(@PathVariable String cpf) {
         return ResponseEntity.ok(clienteService.buscarPorCpf(cpf));
     }
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Cliente> inserir(@RequestBody Cliente cliente) {
         clienteService.inserir(cliente);
-        return ResponseEntity.ok(cliente);
+        return ResponseEntity.ok().build();
     }
     @PutMapping("/{cpf}")
     public ResponseEntity<Cliente> atualizar(@PathVariable String cpf, @RequestBody Cliente cliente){
         clienteService.atualizar(cpf, cliente);
         return ResponseEntity.ok(cliente);
-    }
-    @DeleteMapping("/delete/{cpf}")
-    public ResponseEntity<Cliente> deletar(@PathVariable String cpf){
-        clienteService.deletar(cpf);
-        return ResponseEntity.ok().build();
     }
 }
 

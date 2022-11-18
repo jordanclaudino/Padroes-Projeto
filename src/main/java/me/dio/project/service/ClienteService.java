@@ -8,5 +8,4 @@ public interface ClienteService {
     Cliente buscarPorCpf(String cpf);
     void inserir(Cliente cliente);
     void atualizar(String cpf, Cliente cliente);
-    void deletar(String cpf);
 }
